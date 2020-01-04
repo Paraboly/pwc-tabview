@@ -10,7 +10,7 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface ComponentName {
+  interface PwcTabview {
     /**
     * The first name
     */
@@ -29,18 +29,18 @@ export namespace Components {
 declare global {
 
 
-  interface HTMLComponentNameElement extends Components.ComponentName, HTMLStencilElement {}
-  var HTMLComponentNameElement: {
-    prototype: HTMLComponentNameElement;
-    new (): HTMLComponentNameElement;
+  interface HTMLPwcTabviewElement extends Components.PwcTabview, HTMLStencilElement {}
+  var HTMLPwcTabviewElement: {
+    prototype: HTMLPwcTabviewElement;
+    new (): HTMLPwcTabviewElement;
   };
   interface HTMLElementTagNameMap {
-    'component-name': HTMLComponentNameElement;
+    'pwc-tabview': HTMLPwcTabviewElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface ComponentName {
+  interface PwcTabview {
     /**
     * The first name
     */
@@ -56,7 +56,7 @@ declare namespace LocalJSX {
   }
 
   interface IntrinsicElements {
-    'component-name': ComponentName;
+    'pwc-tabview': PwcTabview;
   }
 }
 
@@ -66,7 +66,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      'component-name': LocalJSX.ComponentName & JSXBase.HTMLAttributes<HTMLComponentNameElement>;
+      'pwc-tabview': LocalJSX.PwcTabview & JSXBase.HTMLAttributes<HTMLPwcTabviewElement>;
     }
   }
 }

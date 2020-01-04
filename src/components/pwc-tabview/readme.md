@@ -1,4 +1,4 @@
-# component-name
+# pwc-tabview
 
 <!-- Auto Generated Below -->
 
