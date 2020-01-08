@@ -1,5 +1,5 @@
 * {
-  margin: 10px;
+  margin: 0;
   padding: 0;
   border: 0;
 }
@@ -12,19 +12,13 @@
 }
 
 .tab-container {
-  border: 1px solid purple;
-  padding: 10px;
   display: flex;
   flex-direction: column;
-  order: 1;
 }
 
-.drawer {
-  border: 1px solid red;
-  padding: 10px;
+.handle-container {
   display: flex;
   flex-grow: 0;
-  order: 2;
 }
 
 .handle {
@@ -46,7 +40,6 @@
 
 .active-tab {
   display: flex;
-  background-color: green;
 }
 
 .active-handle {

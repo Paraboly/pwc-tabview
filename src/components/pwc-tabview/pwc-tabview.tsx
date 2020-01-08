@@ -29,25 +29,19 @@ export class PwcTabview {
     this.activeTab.active = true;
     return (
       <div class="container">
+        <div class="handle-container">
+          {tabs.map(tab => {
+            return (
+              <pwc-tabview-handle tab={tab} active={this.activeTab === tab}>
+                {tab.handle}
+              </pwc-tabview-handle>
+            );
+          })}
+        </div>
         <div class="tab-container">
           <slot />
         </div>
-        {this.createDrawer(tabs)}
       </div>
-    );
-  }
-
-  createDrawer(tabs: HTMLPwcTabviewTabElement[]) {
-    return (
-      <pwc-tabview-drawer>
-        {tabs.map(tab => {
-          return (
-            <pwc-tabview-handle tab={tab} active={this.activeTab === tab}>
-              {tab.handle}
-            </pwc-tabview-handle>
-          );
-        })}
-      </pwc-tabview-drawer>
     );
   }
 }
