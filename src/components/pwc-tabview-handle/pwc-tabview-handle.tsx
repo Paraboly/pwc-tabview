@@ -1,14 +1,14 @@
 import { Component, h } from "@stencil/core";
 
 @Component({
-  tag: "pwc-tabview",
+  tag: "pwc-tabview-handle",
   styleUrl: "../styles.scss",
   shadow: true
 })
-export class PwcTabview {
+export class PwcTabviewHandle {
   render() {
     return (
-      <div class="container">
+      <div class="handle">
         <slot />
       </div>
     );

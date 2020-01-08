@@ -10,20 +10,10 @@ import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 
 
 export namespace Components {
-  interface PwcTabview {
-    /**
-    * The first name
-    */
-    'first': string;
-    /**
-    * The last name
-    */
-    'last': string;
-    /**
-    * The middle name
-    */
-    'middle': string;
-  }
+  interface PwcTabview {}
+  interface PwcTabviewDrawer {}
+  interface PwcTabviewHandle {}
+  interface PwcTabviewTab {}
 }
 
 declare global {
@@ -34,29 +24,43 @@ declare global {
     prototype: HTMLPwcTabviewElement;
     new (): HTMLPwcTabviewElement;
   };
+
+  interface HTMLPwcTabviewDrawerElement extends Components.PwcTabviewDrawer, HTMLStencilElement {}
+  var HTMLPwcTabviewDrawerElement: {
+    prototype: HTMLPwcTabviewDrawerElement;
+    new (): HTMLPwcTabviewDrawerElement;
+  };
+
+  interface HTMLPwcTabviewHandleElement extends Components.PwcTabviewHandle, HTMLStencilElement {}
+  var HTMLPwcTabviewHandleElement: {
+    prototype: HTMLPwcTabviewHandleElement;
+    new (): HTMLPwcTabviewHandleElement;
+  };
+
+  interface HTMLPwcTabviewTabElement extends Components.PwcTabviewTab, HTMLStencilElement {}
+  var HTMLPwcTabviewTabElement: {
+    prototype: HTMLPwcTabviewTabElement;
+    new (): HTMLPwcTabviewTabElement;
+  };
   interface HTMLElementTagNameMap {
     'pwc-tabview': HTMLPwcTabviewElement;
+    'pwc-tabview-drawer': HTMLPwcTabviewDrawerElement;
+    'pwc-tabview-handle': HTMLPwcTabviewHandleElement;
+    'pwc-tabview-tab': HTMLPwcTabviewTabElement;
   }
 }
 
 declare namespace LocalJSX {
-  interface PwcTabview {
-    /**
-    * The first name
-    */
-    'first'?: string;
-    /**
-    * The last name
-    */
-    'last'?: string;
-    /**
-    * The middle name
-    */
-    'middle'?: string;
-  }
+  interface PwcTabview {}
+  interface PwcTabviewDrawer {}
+  interface PwcTabviewHandle {}
+  interface PwcTabviewTab {}
 
   interface IntrinsicElements {
     'pwc-tabview': PwcTabview;
+    'pwc-tabview-drawer': PwcTabviewDrawer;
+    'pwc-tabview-handle': PwcTabviewHandle;
+    'pwc-tabview-tab': PwcTabviewTab;
   }
 }
 
@@ -67,6 +71,9 @@ declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
       'pwc-tabview': LocalJSX.PwcTabview & JSXBase.HTMLAttributes<HTMLPwcTabviewElement>;
+      'pwc-tabview-drawer': LocalJSX.PwcTabviewDrawer & JSXBase.HTMLAttributes<HTMLPwcTabviewDrawerElement>;
+      'pwc-tabview-handle': LocalJSX.PwcTabviewHandle & JSXBase.HTMLAttributes<HTMLPwcTabviewHandleElement>;
+      'pwc-tabview-tab': LocalJSX.PwcTabviewTab & JSXBase.HTMLAttributes<HTMLPwcTabviewTabElement>;
     }
   }
 }
