@@ -1,4 +1,4 @@
-import { Component, h, Element, Listen, State } from "@stencil/core";
+import { Component, h, Element, Listen, State, Prop } from "@stencil/core";
 import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 
 @Component({
@@ -17,6 +17,8 @@ export class PwcTabview {
     this.activeTab = tab;
   }
 
+  @Prop() wrapHandles: boolean = false;
+
   @State() activeTab: HTMLPwcTabviewTabElement;
 
   componentWillLoad() {
@@ -29,7 +31,10 @@ export class PwcTabview {
     this.activeTab.active = true;
     return (
       <div class="container">
-        <div class="handle-container">
+        <div
+          class="handle-container"
+          style={{ flexWrap: this.wrapHandles ? "wrap" : "nowrap" }}
+        >
           {tabs.map(tab => {
             return (
               <pwc-tabview-handle tab={tab} active={this.activeTab === tab}>

@@ -12,7 +12,9 @@ import {
 } from './interfaces/PwcTabviewInterfaces';
 
 export namespace Components {
-  interface PwcTabview {}
+  interface PwcTabview {
+    'wrapHandles': boolean;
+  }
   interface PwcTabviewHandle {
     'active': boolean;
     'tab': HTMLPwcTabviewTabElement;
@@ -51,7 +53,9 @@ declare global {
 }
 
 declare namespace LocalJSX {
-  interface PwcTabview {}
+  interface PwcTabview {
+    'wrapHandles'?: boolean;
+  }
   interface PwcTabviewHandle {
     'active'?: boolean;
     'onHandleClicked'?: (event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>) => void;
