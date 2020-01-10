@@ -1,4 +1,4 @@
-import { Component, h, Element, Listen, State, Prop } from "@stencil/core";
+import { Component, h, Element, Listen, State } from "@stencil/core";
 import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 
 @Component({

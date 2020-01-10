@@ -1,6 +1,5 @@
 import {
   Component,
-  h,
   Prop,
   Event,
   EventEmitter,
