@@ -3,33 +3,36 @@ pwc-tabview {
   flex-direction: column;
 }
 
+.pwc-tabview___handle-container {
+  display: flex;
+  padding-left: 1px;
+}
+
 pwc-tabview-handle {
-  display: inline-block;
+  display: block;
   margin-bottom: -1px;
   margin-left: -1px;
   border: 1px solid black;
   padding: 10px;
+  z-index: 2;
   cursor: pointer;
   user-select: none;
-  background-color: white;
+  background-color: #ddd;
+}
+
+.pwc-tabview___active-handle {
+  border-bottom-style: none;
+  background-color: #fff;
 }
 
 pwc-tabview-tab {
   display: none;
   border: 1px solid black;
   padding: 10px;
+  z-index: 1;
   background-color: white;
-}
-
-.pwc-tabview___handle-container {
-  display: flex;
-  padding-left: 1px;
 }
 
 .pwc-tabview___active-tab {
   display: block;
-}
-
-.pwc-tabview___active-handle {
-  background-color: turquoise;
 }
