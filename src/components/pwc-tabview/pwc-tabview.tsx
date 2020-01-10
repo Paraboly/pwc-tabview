@@ -17,8 +17,6 @@ export class PwcTabview {
     this.activeTab = tab;
   }
 
-  @Prop() wrapHandles: boolean = false;
-
   @State() activeTab: HTMLPwcTabviewTabElement;
 
   componentWillLoad() {
@@ -30,10 +28,7 @@ export class PwcTabview {
     tabs.forEach(t => (t.active = false));
     this.activeTab.active = true;
     return [
-      <div
-        class="pwc-tabview___handle-container"
-        style={{ flexWrap: this.wrapHandles ? "wrap" : "nowrap" }}
-      >
+      <div class="pwc-tabview___handle-container">
         {tabs.map(tab => {
           return (
             <pwc-tabview-handle
