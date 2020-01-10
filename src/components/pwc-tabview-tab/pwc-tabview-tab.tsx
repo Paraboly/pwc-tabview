@@ -1,9 +1,9 @@
-import { Component, h, Prop, Element } from "@stencil/core";
+import { Component, h, Prop, Element, Watch } from "@stencil/core";
 
 @Component({
   tag: "pwc-tabview-tab",
   styleUrl: "../styles.scss",
-  shadow: true
+  shadow: false
 })
 export class PwcTabviewTab {
   @Element() root: HTMLElement;
@@ -11,17 +11,20 @@ export class PwcTabviewTab {
   @Prop() handle: string;
 
   @Prop() active: boolean;
+  @Watch("active")
+  activeWatchHandler(newValue: boolean) {
+    if (newValue) {
+      this.root.classList.add("pwc-tabview___active-tab");
+    } else {
+      this.root.classList.remove("pwc-tabview___active-tab");
+    }
+  }
+
+  componentWillRender() {
+    this.activeWatchHandler(this.active);
+  }
 
   render() {
-    const classList = ["tab"];
-    if (this.active) {
-      classList.push("active-tab");
-    }
-
-    return (
-      <div class={classList.join(" ")}>
-        <slot />
-      </div>
-    );
+    return <slot />;
   }
 }

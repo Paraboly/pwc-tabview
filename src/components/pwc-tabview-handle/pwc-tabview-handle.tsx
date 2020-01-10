@@ -4,14 +4,16 @@ import {
   Prop,
   Event,
   EventEmitter,
-  Element
+  Element,
+  Watch,
+  Listen
 } from "@stencil/core";
 import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 
 @Component({
   tag: "pwc-tabview-handle",
   styleUrl: "../styles.scss",
-  shadow: true
+  shadow: false
 })
 export class PwcTabviewHandle {
   @Element() root: HTMLPwcTabviewHandleElement;
@@ -19,31 +21,35 @@ export class PwcTabviewHandle {
   @Prop() tab: HTMLPwcTabviewTabElement;
 
   @Prop() active: boolean;
+  @Watch("active")
+  activeWatchHandler(newValue: boolean) {
+    if (newValue) {
+      this.root.classList.add("pwc-tabview___active-handle");
+    } else {
+      this.root.classList.remove("pwc-tabview___active-handle");
+    }
+  }
 
   @Event() handleClicked: EventEmitter<
     PwcTabviewInterfaces.IHandleClickedEventPayload
   >;
 
-  render() {
-    const classList = ["handle"];
-    if (this.active) {
-      classList.push("active-handle");
-    }
-
-    return (
-      <div class={classList.join(" ")} onClick={e => this.handleOnClick(e)}>
-        {this.tab.handle}
-      </div>
-    );
-  }
-
-  handleOnClick(e: MouseEvent): void {
-    e.preventDefault();
-    e.stopPropagation();
+  @Listen("click")
+  clickEventHandler(event: MouseEvent) {
+    event.preventDefault();
+    event.stopPropagation();
     this.handleClicked.emit({
-      originalEvent: e,
+      originalEvent: event,
       handle: this.root,
       tab: this.tab
     });
+  }
+
+  componentWillRender() {
+    this.activeWatchHandler(this.active);
+  }
+
+  render() {
+    return this.tab.handle;
   }
 }

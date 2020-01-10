@@ -4,7 +4,7 @@ import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 @Component({
   tag: "pwc-tabview",
   styleUrl: "../styles.scss",
-  shadow: true
+  shadow: false
 })
 export class PwcTabview {
   @Element() root: HTMLElement;
@@ -29,24 +29,21 @@ export class PwcTabview {
     const tabs = Array.from(document.querySelectorAll("pwc-tabview-tab"));
     tabs.forEach(t => (t.active = false));
     this.activeTab.active = true;
-    return (
-      <div class="container">
-        <div
-          class="handle-container"
-          style={{ flexWrap: this.wrapHandles ? "wrap" : "nowrap" }}
-        >
-          {tabs.map(tab => {
-            return (
-              <pwc-tabview-handle tab={tab} active={this.activeTab === tab}>
-                {tab.handle}
-              </pwc-tabview-handle>
-            );
-          })}
-        </div>
-        <div class="tab-container">
-          <slot />
-        </div>
-      </div>
-    );
+    return [
+      <div
+        class="pwc-tabview___handle-container"
+        style={{ flexWrap: this.wrapHandles ? "wrap" : "nowrap" }}
+      >
+        {tabs.map(tab => {
+          return (
+            <pwc-tabview-handle
+              tab={tab}
+              active={this.activeTab === tab}
+            ></pwc-tabview-handle>
+          );
+        })}
+      </div>,
+      <slot />
+    ];
   }
 }

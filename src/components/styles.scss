@@ -1,45 +1,33 @@
-* {
-  margin: 0;
-  padding: 0;
-  border: 0;
-}
-
-.container {
+pwc-tabview {
   display: flex;
   flex-direction: column;
 }
 
-.tab-container {
-  display: flex;
-  flex-direction: column;
-}
-
-.handle-container {
-  display: flex;
-  flex-grow: 0;
-}
-
-.handle {
-  border: 1px solid green;
+pwc-tabview-handle {
+  display: inline-block;
+  margin-bottom: -1px;
+  margin-left: -1px;
+  border: 1px solid black;
   padding: 10px;
-  display: flex;
+  cursor: pointer;
+  user-select: none;
 }
 
-.handle + .handle {
-  margin-left: 10px;
-}
-
-.tab {
-  border: 1px solid blue;
-  padding: 10px;
+pwc-tabview-tab {
   display: none;
-  flex-grow: 1;
+  border: 1px solid black;
+  padding: 10px;
 }
 
-.active-tab {
+.pwc-tabview___handle-container {
   display: flex;
+  padding-left: 1px;
 }
 
-.active-handle {
+.pwc-tabview___active-tab {
+  display: block;
+}
+
+.pwc-tabview___active-handle {
   background-color: turquoise;
 }
