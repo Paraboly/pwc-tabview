@@ -1,7 +1,7 @@
 {
   "name": "@paraboly/pwc-tabview",
   "version": "0.0.1",
-  "description": "Template repository for Paraboly Web Component Libraries",
+  "description": "Simple and self-contained tabview.",
   "keywords": [
     "paraboly",
     "stencil",
@@ -9,12 +9,16 @@
     "web-component",
     "webcomponent",
     "ui",
-    "frontend"
+    "frontend",
+    "tab",
+    "tab-view",
+    "tabview",
+    "starikcetin"
   ],
   "homepage": "https://www.paraboly.com",
   "bugs": "https://github.com/Paraboly/pwc-tabview/issues",
   "repository": "git@github.com:Paraboly/pwc-tabview.git",
-  "author": "Author (https://author.url.here/) <author@email.com>",
+  "author": "starikcetin (https://github.com/starikcetin) <cetinsamedtarik@gmail.com>",
   "license": "MIT",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
