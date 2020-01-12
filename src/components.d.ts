@@ -5,84 +5,81 @@
  * It contains typing information for all components that exist in this project.
  */
 
-import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
-import { PwcTabviewInterfaces } from "./interfaces/PwcTabviewInterfaces";
+
+import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
+import {
+  PwcTabviewInterfaces,
+} from './interfaces/PwcTabviewInterfaces';
 
 export namespace Components {
   interface PwcTabview {}
   interface PwcTabviewHandle {
-    active: boolean;
-    tab: HTMLPwcTabviewTabElement;
+    'active': boolean;
+    'tab': HTMLPwcTabviewTabElement;
   }
   interface PwcTabviewTab {
-    active: boolean;
-    handle: string;
+    'active': boolean;
+    'handle': string;
   }
 }
 
 declare global {
-  interface HTMLPwcTabviewElement
-    extends Components.PwcTabview,
-      HTMLStencilElement {}
+
+
+  interface HTMLPwcTabviewElement extends Components.PwcTabview, HTMLStencilElement {}
   var HTMLPwcTabviewElement: {
     prototype: HTMLPwcTabviewElement;
     new (): HTMLPwcTabviewElement;
   };
 
-  interface HTMLPwcTabviewHandleElement
-    extends Components.PwcTabviewHandle,
-      HTMLStencilElement {}
+  interface HTMLPwcTabviewHandleElement extends Components.PwcTabviewHandle, HTMLStencilElement {}
   var HTMLPwcTabviewHandleElement: {
     prototype: HTMLPwcTabviewHandleElement;
     new (): HTMLPwcTabviewHandleElement;
   };
 
-  interface HTMLPwcTabviewTabElement
-    extends Components.PwcTabviewTab,
-      HTMLStencilElement {}
+  interface HTMLPwcTabviewTabElement extends Components.PwcTabviewTab, HTMLStencilElement {}
   var HTMLPwcTabviewTabElement: {
     prototype: HTMLPwcTabviewTabElement;
     new (): HTMLPwcTabviewTabElement;
   };
   interface HTMLElementTagNameMap {
-    "pwc-tabview": HTMLPwcTabviewElement;
-    "pwc-tabview-handle": HTMLPwcTabviewHandleElement;
-    "pwc-tabview-tab": HTMLPwcTabviewTabElement;
+    'pwc-tabview': HTMLPwcTabviewElement;
+    'pwc-tabview-handle': HTMLPwcTabviewHandleElement;
+    'pwc-tabview-tab': HTMLPwcTabviewTabElement;
   }
 }
 
 declare namespace LocalJSX {
   interface PwcTabview {}
   interface PwcTabviewHandle {
-    active?: boolean;
-    onHandleClicked?: (
-      event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>
-    ) => void;
-    tab?: HTMLPwcTabviewTabElement;
+    'active'?: boolean;
+    'onHandleClicked'?: (event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>) => void;
+    'tab'?: HTMLPwcTabviewTabElement;
   }
   interface PwcTabviewTab {
-    active?: boolean;
-    handle?: string;
+    'active'?: boolean;
+    'handle'?: string;
   }
 
   interface IntrinsicElements {
-    "pwc-tabview": PwcTabview;
-    "pwc-tabview-handle": PwcTabviewHandle;
-    "pwc-tabview-tab": PwcTabviewTab;
+    'pwc-tabview': PwcTabview;
+    'pwc-tabview-handle': PwcTabviewHandle;
+    'pwc-tabview-tab': PwcTabviewTab;
   }
 }
 
 export { LocalJSX as JSX };
 
+
 declare module "@stencil/core" {
   export namespace JSX {
     interface IntrinsicElements {
-      "pwc-tabview": LocalJSX.PwcTabview &
-        JSXBase.HTMLAttributes<HTMLPwcTabviewElement>;
-      "pwc-tabview-handle": LocalJSX.PwcTabviewHandle &
-        JSXBase.HTMLAttributes<HTMLPwcTabviewHandleElement>;
-      "pwc-tabview-tab": LocalJSX.PwcTabviewTab &
-        JSXBase.HTMLAttributes<HTMLPwcTabviewTabElement>;
+      'pwc-tabview': LocalJSX.PwcTabview & JSXBase.HTMLAttributes<HTMLPwcTabviewElement>;
+      'pwc-tabview-handle': LocalJSX.PwcTabviewHandle & JSXBase.HTMLAttributes<HTMLPwcTabviewHandleElement>;
+      'pwc-tabview-tab': LocalJSX.PwcTabviewTab & JSXBase.HTMLAttributes<HTMLPwcTabviewTabElement>;
     }
   }
 }
+
+
