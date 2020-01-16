@@ -25,8 +25,12 @@ export class PwcTabview {
 
   render() {
     const tabs = Array.from(document.querySelectorAll("pwc-tabview-tab"));
-    tabs.forEach(t => (t.active = false));
-    this.activeTab.active = true;
+
+    if(tabs.length > 0) {
+      tabs.forEach(t => (t.active = false));
+      this.activeTab.active = true;        
+    }
+
     return [
       <div class="pwc-tabview___handle-container">
         {tabs.map(tab => {
