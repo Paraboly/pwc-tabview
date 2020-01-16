@@ -86,5 +86,20 @@
         9
       </pwc-tabview-tab>
     </pwc-tabview>
+
+    <br />
+    <hr />
+    <br />
+
+    <button id="addTabButton">Add Tab</button>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", e => {
+        document.querySelector("#addTabButton").addEventListener("click", e => {
+          const children = document.querySelector("pwc-tabview").children;
+          children[children.length -1].insertAdjacentHTML("afterend", "<pwc-tabview-tab handle='new tab'>New Tab</pwc-tabview-tab>")
+        });
+      });
+    </script>
   </body>
 </html>
