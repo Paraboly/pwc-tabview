@@ -60,6 +60,7 @@ declare namespace LocalJSX {
   interface PwcTabviewTab {
     'active'?: boolean;
     'handle'?: string;
+    'onTabChanged'?: (event: CustomEvent<any>) => void;
   }
 
   interface IntrinsicElements {

@@ -7,10 +7,14 @@ import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
   shadow: false
 })
 export class PwcTabview {
-  // The value has no significance. We increment it to trigger a render.
-  @State() forceRenderSentinel: number;
-
   @Element() root: HTMLElement;
+
+  @Listen('tabChanged')
+  changedEventHandler(event: Event) {
+    event.stopPropagation();
+    event.preventDefault();
+    this.forceRender();
+  }
 
   @Listen("handleClicked")
   handleClickedHandler(
@@ -28,12 +32,22 @@ export class PwcTabview {
 
   onChildrenChange()
   {
-    this.forceRenderSentinel++;
+    this.forceRender();
   }
 
   componentDidLoad() {
     const observer = new MutationObserver(() => this.onChildrenChange())
-    observer.observe(this.root, { childList: true })
+    const options = {
+      childList: true
+    };
+    observer.observe(this.root, options);
+  }
+
+  // The value has no significance. We increment it to trigger a render.
+  @State() forceRenderSentinel: number;
+
+  forceRender() {
+    this.forceRenderSentinel = (this.forceRenderSentinel + 1) % 100;
   }
 
   render() {
@@ -51,7 +65,7 @@ export class PwcTabview {
             <pwc-tabview-handle
               tab={tab}
               active={this.activeTab === tab}
-            ></pwc-tabview-handle>
+            >{tab.handle}</pwc-tabview-handle>
           );
         })}
       </div>,

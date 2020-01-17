@@ -11,6 +11,13 @@
 | `handle` | `handle`  |             | `string`  | `undefined` |
 
 
+## Events
+
+| Event        | Description | Type               |
+| ------------ | ----------- | ------------------ |
+| `tabChanged` |             | `CustomEvent<any>` |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*

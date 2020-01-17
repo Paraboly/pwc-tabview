@@ -1,4 +1,5 @@
 import {
+  h,
   Component,
   Prop,
   Event,
@@ -49,6 +50,6 @@ export class PwcTabviewHandle {
   }
 
   render() {
-    return this.tab.handle;
+    return <slot />;
   }
 }
