@@ -93,11 +93,31 @@
 
     <button id="addTabButton">Add Tab</button>
 
+    <br />
+    <hr />
+    <br />
+
+    <form id="removeTabForm">
+      <label>
+        Tab Handle:
+        <input type="text" id="tabHandle" name="handle" placeholder="enter tab handle..." />
+      </label>
+      <input type="button" id="removeTab" value="Remove Tab" />
+    </form>
+
     <script>
+      const tabView = document.querySelector("pwc-tabview");
+
       document.addEventListener("DOMContentLoaded", e => {
         document.querySelector("#addTabButton").addEventListener("click", e => {
           const children = document.querySelector("pwc-tabview").children;
-          children[children.length -1].insertAdjacentHTML("afterend", "<pwc-tabview-tab handle='new tab'>New Tab</pwc-tabview-tab>")
+          children[children.length -1].insertAdjacentHTML("afterend", "<pwc-tabview-tab handle='new tab'>New Tab</pwc-tabview-tab>");
+        });
+
+        document.querySelector("#removeTab").addEventListener("click", e => {
+          const tabHandle = document.querySelector("#tabHandle").value;
+          const childTabRemove = tabView.querySelector("[handle='" + tabHandle + "'");
+          tabView.removeChild(childTabRemove);
         });
       });
     </script>
