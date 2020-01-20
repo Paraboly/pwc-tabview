@@ -20,7 +20,7 @@ export class PwcTabviewHandle {
 
   @Prop() tab: HTMLPwcTabviewTabElement;
 
-  @Prop() active: boolean;
+  @Prop({ reflect: true }) active: boolean;
   @Watch("active")
   activeWatchHandler(newValue: boolean) {
     if (newValue) {

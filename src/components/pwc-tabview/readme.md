@@ -10,6 +10,19 @@
 | `tabChanged` |             | `CustomEvent<ITabChangedEventPayload>` |
 
 
+## Methods
+
+### `getActiveState() => Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HTMLPwcTabviewHandleElement; }>`
+
+
+
+#### Returns
+
+Type: `Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HTMLPwcTabviewHandleElement; }>`
+
+
+
+
 ## Dependencies
 
 ### Depends on

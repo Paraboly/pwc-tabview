@@ -1,4 +1,4 @@
-import { Component, h, Element, Listen, State, Event, EventEmitter } from "@stencil/core";
+import { Component, h, Element, Listen, State, Event, EventEmitter, Method } from "@stencil/core";
 import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 
 @Component({
@@ -22,21 +22,39 @@ export class PwcTabview {
   handleClickedHandler(
     event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>
   ) {
-    const tab = event.detail.tab;
-    const handle = event.detail.handle;
-    this.activeTab = tab;
+    const tabRef = event.detail.tab;
+    const handleRef = event.detail.handle;
+    const handle = tabRef.handle;
+
+    this.activeHandle = handle;
+    this.activeTabRef = tabRef;
+    this.activeHandleRef = handleRef;
+
     this.tabChanged.emit({
       originalEvent: event,
-      handle: tab.handle, 
-      handleRef: handle, 
-      tabRef: tab
+      handle: handle,
+      tabRef: tabRef,
+      handleRef: handleRef
     });
   }
 
-  @State() activeTab: HTMLPwcTabviewTabElement;
+  @State() activeHandle: string;
+  private activeTabRef: HTMLPwcTabviewTabElement;
+  private activeHandleRef: HTMLPwcTabviewHandleElement;
+
+  @Method()
+  async getActiveState() {
+    return {
+      handle: this.activeHandle, 
+      tabRef: this.activeTabRef, 
+      handleRef: this.activeHandleRef
+    };
+  }
 
   componentWillLoad() {
-    this.activeTab = document.querySelector("pwc-tabview-tab");
+    this.activeTabRef = this.root.querySelector("pwc-tabview-tab");
+    this.activeHandle = this.activeTabRef.handle;
+    // activeHandleRef is assigned in componentDidLoad
   }
 
   onChildrenChange()
@@ -50,6 +68,8 @@ export class PwcTabview {
       childList: true
     };
     observer.observe(this.root, options);
+
+    this.activeHandleRef = this.root.querySelector('pwc-tabview-handle[active]');
   }
 
   // The value has no significance. We increment it to trigger a render.
@@ -64,7 +84,7 @@ export class PwcTabview {
 
     if(tabs.length > 0) {
       tabs.forEach(t => (t.active = false));
-      this.activeTab.active = true;        
+      this.activeTabRef.active = true;        
     }
 
     return [
@@ -73,7 +93,7 @@ export class PwcTabview {
           return (
             <pwc-tabview-handle
               tab={tab}
-              active={this.activeTab === tab}
+              active={this.activeTabRef === tab}
             >{tab.handle}</pwc-tabview-handle>
           );
         })}

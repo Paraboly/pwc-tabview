@@ -92,6 +92,7 @@
     <br />
 
     <button id="addTabButton">Add Tab</button>
+    <button id="logStateButton">Log State</button>
 
     <br />
     <hr />
@@ -135,7 +136,13 @@
 
         tabView.addEventListener("tabChanged", e => {
           console.log("tab changed", e.detail);
-        })
+        });
+
+        document.querySelector("#logStateButton").addEventListener("click", e => {
+          tabView.getActiveState().then(a => {
+            console.log("active state", a);
+          });
+        });
       });
     </script>
   </body>

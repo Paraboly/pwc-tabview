@@ -12,7 +12,9 @@ import {
 } from './interfaces/PwcTabviewInterfaces';
 
 export namespace Components {
-  interface PwcTabview {}
+  interface PwcTabview {
+    'getActiveState': () => Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HTMLPwcTabviewHandleElement; }>;
+  }
   interface PwcTabviewHandle {
     'active': boolean;
     'tab': HTMLPwcTabviewTabElement;
