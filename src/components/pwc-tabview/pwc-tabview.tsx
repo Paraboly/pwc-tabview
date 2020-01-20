@@ -9,6 +9,10 @@ import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 export class PwcTabview {
   @Element() root: HTMLElement;
 
+  private handles: string[] = [];
+  private tabRefs: { [key: string] : HTMLPwcTabviewTabElement } = {};
+  private handleRefs: { [key: string] : HTMLPwcTabviewHandleElement } = {};
+
   @Event() tabChanged: EventEmitter<PwcTabviewInterfaces.ITabChangedEventPayload>;
 
   @Listen('tabModified')
@@ -31,6 +35,7 @@ export class PwcTabview {
     this.activeHandleRef = handleRef;
 
     this.tabChanged.emit({
+      type: "handleClick",
       originalEvent: event,
       handle: handle,
       tabRef: tabRef,
@@ -51,10 +56,22 @@ export class PwcTabview {
     };
   }
 
-  componentWillLoad() {
-    this.activeTabRef = this.root.querySelector("pwc-tabview-tab");
-    this.activeHandle = this.activeTabRef.handle;
-    // activeHandleRef is assigned in componentDidLoad
+  @Method()
+  async switchToTab(handle: string) {
+    const tabRef = this.tabRefs[handle];
+    const handleRef = this.handleRefs[handle];
+
+    this.activeHandle = handle;
+    this.activeTabRef = tabRef;
+    this.activeHandleRef = handleRef;
+
+    this.tabChanged.emit({
+      type: "manual",
+      originalEvent: null,
+      handle: handle,
+      tabRef: tabRef,
+      handleRef: handleRef
+    });
   }
 
   onChildrenChange()
@@ -69,7 +86,8 @@ export class PwcTabview {
     };
     observer.observe(this.root, options);
 
-    this.activeHandleRef = this.root.querySelector('pwc-tabview-handle[active]');
+    const firstHandle = this.handles[0];
+    this.switchToTab(firstHandle);
   }
 
   // The value has no significance. We increment it to trigger a render.
@@ -82,18 +100,22 @@ export class PwcTabview {
   render() {
     const tabs = Array.from(document.querySelectorAll("pwc-tabview-tab"));
 
-    if(tabs.length > 0) {
+    this.handles = tabs.map(t => t.handle);
+
+    if(tabs.length > 0 && this.activeTabRef) {
       tabs.forEach(t => (t.active = false));
-      this.activeTabRef.active = true;        
+      this.activeTabRef.active = true;
     }
 
     return [
       <div class="pwc-tabview___handle-container">
         {tabs.map(tab => {
+          this.tabRefs[tab.handle] = tab;
           return (
             <pwc-tabview-handle
               tab={tab}
               active={this.activeTabRef === tab}
+              ref={elem => this.handleRefs[tab.handle] = elem}
             >{tab.handle}</pwc-tabview-handle>
           );
         })}

@@ -14,6 +14,7 @@ import {
 export namespace Components {
   interface PwcTabview {
     'getActiveState': () => Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HTMLPwcTabviewHandleElement; }>;
+    'switchToTab': (handle: string) => Promise<void>;
   }
   interface PwcTabviewHandle {
     'active': boolean;

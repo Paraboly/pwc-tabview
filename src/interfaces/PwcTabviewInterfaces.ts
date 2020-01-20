@@ -7,6 +7,7 @@ export namespace PwcTabviewInterfaces {
   }
 
   export interface ITabChangedEventPayload {
+    type: "manual" | "handleClick";
     originalEvent: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>;
     handle: string;
     tabRef: HTMLPwcTabviewTabElement;

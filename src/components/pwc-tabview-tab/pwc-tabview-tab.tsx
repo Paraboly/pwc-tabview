@@ -10,7 +10,7 @@ export class PwcTabviewTab {
 
   @Event() tabModified: EventEmitter;
 
-  @Prop() handle: string;
+  @Prop({reflect: true}) handle: string;
   @Watch('handle')
   watchHandler() {
     this.tabModified.emit();

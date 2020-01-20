@@ -22,6 +22,16 @@ Type: `Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HT
 
 
 
+### `switchToTab(handle: string) => Promise<void>`
+
+
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## Dependencies
 
