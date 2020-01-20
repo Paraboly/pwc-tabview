@@ -5,4 +5,11 @@ export namespace PwcTabviewInterfaces {
     handle: HTMLPwcTabviewHandleElement;
     tab: HTMLPwcTabviewTabElement;
   }
+
+  export interface ITabChangedEventPayload {
+    originalEvent: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>;
+    handle: string;
+    handleRef: HTMLPwcTabviewHandleElement;
+    tabRef: HTMLPwcTabviewTabElement;
+  }
 }

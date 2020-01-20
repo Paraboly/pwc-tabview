@@ -1,4 +1,4 @@
-import { Component, h, Element, Listen, State } from "@stencil/core";
+import { Component, h, Element, Listen, State, Event, EventEmitter } from "@stencil/core";
 import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 
 @Component({
@@ -9,8 +9,10 @@ import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 export class PwcTabview {
   @Element() root: HTMLElement;
 
-  @Listen('tabChanged')
-  changedEventHandler(event: Event) {
+  @Event() tabChanged: EventEmitter<PwcTabviewInterfaces.ITabChangedEventPayload>;
+
+  @Listen('tabModified')
+  tabModifiedEventHandler(event: Event) {
     event.stopPropagation();
     event.preventDefault();
     this.forceRender();
@@ -21,7 +23,14 @@ export class PwcTabview {
     event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>
   ) {
     const tab = event.detail.tab;
+    const handle = event.detail.handle;
     this.activeTab = tab;
+    this.tabChanged.emit({
+      originalEvent: event,
+      handle: tab.handle, 
+      handleRef: handle, 
+      tabRef: tab
+    });
   }
 
   @State() activeTab: HTMLPwcTabviewTabElement;

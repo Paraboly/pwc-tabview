@@ -132,6 +132,10 @@
           const newTabHandle = document.querySelector("#newTabHandle").value;
           tabView.querySelector("[handle='" + tabHandle + "'").setAttribute("handle", newTabHandle);
         });
+
+        tabView.addEventListener("tabChanged", e => {
+          console.log("tab changed", e.detail);
+        })
       });
     </script>
   </body>

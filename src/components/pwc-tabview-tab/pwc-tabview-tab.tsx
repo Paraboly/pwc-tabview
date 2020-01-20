@@ -8,12 +8,12 @@ import { Component, h, Prop, Element, Watch, Event, EventEmitter } from "@stenci
 export class PwcTabviewTab {
   @Element() root: HTMLElement;
 
-  @Event() tabChanged: EventEmitter;
+  @Event() tabModified: EventEmitter;
 
   @Prop() handle: string;
   @Watch('handle')
   watchHandler() {
-    this.tabChanged.emit();
+    this.tabModified.emit();
   }
 
   @Prop() active: boolean;

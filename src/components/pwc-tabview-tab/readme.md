@@ -13,9 +13,9 @@
 
 ## Events
 
-| Event        | Description | Type               |
-| ------------ | ----------- | ------------------ |
-| `tabChanged` |             | `CustomEvent<any>` |
+| Event         | Description | Type               |
+| ------------- | ----------- | ------------------ |
+| `tabModified` |             | `CustomEvent<any>` |
 
 
 ----------------------------------------------

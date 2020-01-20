@@ -3,6 +3,13 @@
 <!-- Auto Generated Below -->
 
 
+## Events
+
+| Event        | Description | Type                                   |
+| ------------ | ----------- | -------------------------------------- |
+| `tabChanged` |             | `CustomEvent<ITabChangedEventPayload>` |
+
+
 ## Dependencies
 
 ### Depends on
