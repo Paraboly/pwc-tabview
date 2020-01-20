@@ -15,10 +15,14 @@
         padding: 20px;
         background-color: #dff;
       }
+
+      .spaceAfter {
+        margin-bottom: 20px;
+      }
     </style>
   </head>
   <body>
-    <pwc-tabview>
+    <pwc-tabview class="spaceAfter">
       <pwc-tabview-tab handle="What is Lorem Ipsum?">
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
@@ -87,62 +91,89 @@
       </pwc-tabview-tab>
     </pwc-tabview>
 
-    <br />
-    <hr />
-    <br />
+    <div class="spaceAfter" style="border-bottom: 1px dashed black"></div>
 
     <button id="addTabButton">Add Tab</button>
-    <button id="logStateButton">Log State</button>
-
-    <br />
-    <hr />
-    <br />
+    <button id="logStateButton" class="spaceAfter">Log State</button>
 
     <form id="removeTabForm">
-      <label>
-        Tab Handle:
-        <input type="text" id="tabHandle" name="handle" placeholder="enter tab handle..." />
-      </label>
+      <div class="spaceAfter">
+        <label>
+          Tab Handle:
+          <input
+            type="text"
+            id="tabHandle"
+            name="handle"
+            placeholder="enter tab handle..."
+          />
+        </label>
 
-      <label>
-        New Tab Handle:
-        <input type="text" id="newTabHandle" name="newHandle" placeholder="enter new tab handle..." />
-      </label>
+        <input type="button" id="removeTab" value="Remove Tab" />
+        <input type="button" id="switchToTab" value="Switch to Tab" />
+      </div>
 
-      <input type="button" id="removeTab" value="Remove Tab" />
-      <input type="button" id="changeHandle" value="Change Handle" />
+      <div>
+        <label>
+          New Tab Handle:
+          <input
+            type="text"
+            id="newTabHandle"
+            name="newHandle"
+            placeholder="enter new tab handle..."
+          />
+        </label>
+
+        <input type="button" id="changeHandle" value="Change Handle" />
+      </div>
     </form>
 
     <script>
       const tabView = document.querySelector("pwc-tabview");
 
       document.addEventListener("DOMContentLoaded", e => {
+        let newTabCounter = 0;
         document.querySelector("#addTabButton").addEventListener("click", e => {
           const children = document.querySelector("pwc-tabview").children;
-          children[children.length -1].insertAdjacentHTML("afterend", "<pwc-tabview-tab handle='new tab'>New Tab</pwc-tabview-tab>");
+          children[children.length - 1].insertAdjacentHTML(
+            "afterend",
+            "<pwc-tabview-tab handle='" +
+              (++newTabCounter).toString() +
+              "'>New Tab</pwc-tabview-tab>"
+          );
         });
 
         document.querySelector("#removeTab").addEventListener("click", e => {
           const tabHandle = document.querySelector("#tabHandle").value;
-          const childTabRemove = tabView.querySelector("[handle='" + tabHandle + "'");
+          const childTabRemove = tabView.querySelector(
+            "[handle='" + tabHandle + "'"
+          );
           tabView.removeChild(childTabRemove);
+        });
+
+        document.querySelector("#switchToTab").addEventListener("click", e => {
+          const tabHandle = document.querySelector("#tabHandle").value;
+          tabView.switchToTab(tabHandle);
         });
 
         document.querySelector("#changeHandle").addEventListener("click", e => {
           const tabHandle = document.querySelector("#tabHandle").value;
           const newTabHandle = document.querySelector("#newTabHandle").value;
-          tabView.querySelector("[handle='" + tabHandle + "'").setAttribute("handle", newTabHandle);
+          tabView
+            .querySelector("[handle='" + tabHandle + "'")
+            .setAttribute("handle", newTabHandle);
         });
 
         tabView.addEventListener("tabChanged", e => {
           console.log("tab changed", e.detail);
         });
 
-        document.querySelector("#logStateButton").addEventListener("click", e => {
-          tabView.getActiveState().then(a => {
-            console.log("active state", a);
+        document
+          .querySelector("#logStateButton")
+          .addEventListener("click", e => {
+            tabView.getActiveState().then(a => {
+              console.log("active state", a);
+            });
           });
-        });
       });
     </script>
   </body>

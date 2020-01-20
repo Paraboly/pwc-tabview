@@ -1,4 +1,12 @@
-import { Component, h, Prop, Element, Watch, Event, EventEmitter } from "@stencil/core";
+import {
+  Component,
+  h,
+  Prop,
+  Element,
+  Watch,
+  Event,
+  EventEmitter
+} from "@stencil/core";
 
 @Component({
   tag: "pwc-tabview-tab",
@@ -10,8 +18,8 @@ export class PwcTabviewTab {
 
   @Event() tabModified: EventEmitter;
 
-  @Prop({reflect: true}) handle: string;
-  @Watch('handle')
+  @Prop({ reflect: true }) handle: string;
+  @Watch("handle")
   watchHandler() {
     this.tabModified.emit();
   }

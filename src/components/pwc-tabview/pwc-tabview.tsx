@@ -1,4 +1,14 @@
-import { Component, h, Element, Listen, State, Event, EventEmitter, Method } from "@stencil/core";
+import {
+  Component,
+  h,
+  Element,
+  Listen,
+  State,
+  Event,
+  EventEmitter,
+  Method,
+  Watch
+} from "@stencil/core";
 import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 
 @Component({
@@ -9,16 +19,29 @@ import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 export class PwcTabview {
   @Element() root: HTMLElement;
 
+  @State() activeHandle: string;
+  @Watch("activeHandle")
+  activeHandleWatchHandler(newValue) {
+    this.activeTabRef = this.tabRefs[newValue];
+    this.activeHandleRef = this.handleRefs[newValue];
+  }
+
+  private activeTabRef: HTMLPwcTabviewTabElement;
+  private activeHandleRef: HTMLPwcTabviewHandleElement;
+
   private handles: string[] = [];
-  private tabRefs: { [key: string] : HTMLPwcTabviewTabElement } = {};
-  private handleRefs: { [key: string] : HTMLPwcTabviewHandleElement } = {};
+  private tabRefs: { [key: string]: HTMLPwcTabviewTabElement } = {};
+  private handleRefs: { [key: string]: HTMLPwcTabviewHandleElement } = {};
 
-  @Event() tabChanged: EventEmitter<PwcTabviewInterfaces.ITabChangedEventPayload>;
+  @Event() tabChanged: EventEmitter<
+    PwcTabviewInterfaces.ITabChangedEventPayload
+  >;
 
-  @Listen('tabModified')
+  @Listen("tabModified")
   tabModifiedEventHandler(event: Event) {
     event.stopPropagation();
     event.preventDefault();
+
     this.forceRender();
   }
 
@@ -26,61 +49,45 @@ export class PwcTabview {
   handleClickedHandler(
     event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>
   ) {
-    const tabRef = event.detail.tab;
-    const handleRef = event.detail.handle;
-    const handle = tabRef.handle;
+    event.stopPropagation();
+    event.preventDefault();
 
-    this.activeHandle = handle;
-    this.activeTabRef = tabRef;
-    this.activeHandleRef = handleRef;
-
-    this.tabChanged.emit({
-      type: "handleClick",
-      originalEvent: event,
-      handle: handle,
-      tabRef: tabRef,
-      handleRef: handleRef
-    });
+    const handle = event.detail.handle;
+    this.switchToTab(handle);
   }
-
-  @State() activeHandle: string;
-  private activeTabRef: HTMLPwcTabviewTabElement;
-  private activeHandleRef: HTMLPwcTabviewHandleElement;
 
   @Method()
   async getActiveState() {
     return {
-      handle: this.activeHandle, 
-      tabRef: this.activeTabRef, 
+      handle: this.activeHandle,
+      tabRef: this.activeTabRef,
       handleRef: this.activeHandleRef
     };
   }
 
   @Method()
   async switchToTab(handle: string) {
-    const tabRef = this.tabRefs[handle];
-    const handleRef = this.handleRefs[handle];
-
     this.activeHandle = handle;
-    this.activeTabRef = tabRef;
-    this.activeHandleRef = handleRef;
 
     this.tabChanged.emit({
-      type: "manual",
-      originalEvent: null,
       handle: handle,
-      tabRef: tabRef,
-      handleRef: handleRef
+      tabRef: this.activeTabRef,
+      handleRef: this.activeHandleRef
     });
   }
 
-  onChildrenChange()
-  {
+  onChildrenChange() {
     this.forceRender();
   }
 
+  // The value has no significance. We increment it to trigger a render.
+  @State() forceRenderSentinel: number;
+  forceRender() {
+    this.forceRenderSentinel = (this.forceRenderSentinel + 1) % 100;
+  }
+
   componentDidLoad() {
-    const observer = new MutationObserver(() => this.onChildrenChange())
+    const observer = new MutationObserver(() => this.onChildrenChange());
     const options = {
       childList: true
     };
@@ -90,33 +97,28 @@ export class PwcTabview {
     this.switchToTab(firstHandle);
   }
 
-  // The value has no significance. We increment it to trigger a render.
-  @State() forceRenderSentinel: number;
-
-  forceRender() {
-    this.forceRenderSentinel = (this.forceRenderSentinel + 1) % 100;
-  }
-
   render() {
     const tabs = Array.from(document.querySelectorAll("pwc-tabview-tab"));
 
     this.handles = tabs.map(t => t.handle);
 
-    if(tabs.length > 0 && this.activeTabRef) {
+    if (tabs.length > 0 && this.activeTabRef) {
       tabs.forEach(t => (t.active = false));
       this.activeTabRef.active = true;
     }
 
     return [
       <div class="pwc-tabview___handle-container">
-        {tabs.map(tab => {
-          this.tabRefs[tab.handle] = tab;
+        {tabs.map(tabRef => {
+          const handle = tabRef.handle;
+          this.tabRefs[handle] = tabRef;
+
           return (
             <pwc-tabview-handle
-              tab={tab}
-              active={this.activeTabRef === tab}
-              ref={elem => this.handleRefs[tab.handle] = elem}
-            >{tab.handle}</pwc-tabview-handle>
+              handle={handle}
+              active={this.activeTabRef === tabRef}
+              ref={elem => (this.handleRefs[tabRef.handle] = elem)}
+            ></pwc-tabview-handle>
           );
         })}
       </div>,

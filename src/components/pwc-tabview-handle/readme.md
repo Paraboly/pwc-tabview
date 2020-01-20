@@ -5,10 +5,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type                       | Default     |
-| -------- | --------- | ----------- | -------------------------- | ----------- |
-| `active` | `active`  |             | `boolean`                  | `undefined` |
-| `tab`    | --        |             | `HTMLPwcTabviewTabElement` | `undefined` |
+| Property | Attribute | Description | Type      | Default     |
+| -------- | --------- | ----------- | --------- | ----------- |
+| `active` | `active`  |             | `boolean` | `undefined` |
+| `handle` | `handle`  |             | `string`  | `undefined` |
 
 
 ## Events

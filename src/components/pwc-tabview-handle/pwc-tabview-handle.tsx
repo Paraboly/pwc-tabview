@@ -1,5 +1,4 @@
 import {
-  h,
   Component,
   Prop,
   Event,
@@ -18,7 +17,7 @@ import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
 export class PwcTabviewHandle {
   @Element() root: HTMLPwcTabviewHandleElement;
 
-  @Prop() tab: HTMLPwcTabviewTabElement;
+  @Prop() handle: string;
 
   @Prop({ reflect: true }) active: boolean;
   @Watch("active")
@@ -40,8 +39,8 @@ export class PwcTabviewHandle {
     event.stopPropagation();
     this.handleClicked.emit({
       originalEvent: event,
-      handle: this.root,
-      tab: this.tab
+      handleRef: this.root,
+      handle: this.handle
     });
   }
 
@@ -50,6 +49,6 @@ export class PwcTabviewHandle {
   }
 
   render() {
-    return <slot />;
+    return this.handle;
   }
 }

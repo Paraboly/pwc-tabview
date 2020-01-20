@@ -18,7 +18,7 @@ export namespace Components {
   }
   interface PwcTabviewHandle {
     'active': boolean;
-    'tab': HTMLPwcTabviewTabElement;
+    'handle': string;
   }
   interface PwcTabviewTab {
     'active': boolean;
@@ -59,8 +59,8 @@ declare namespace LocalJSX {
   }
   interface PwcTabviewHandle {
     'active'?: boolean;
+    'handle'?: string;
     'onHandleClicked'?: (event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>) => void;
-    'tab'?: HTMLPwcTabviewTabElement;
   }
   interface PwcTabviewTab {
     'active'?: boolean;
