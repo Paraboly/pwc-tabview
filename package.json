@@ -1,6 +1,6 @@
 {
   "name": "@paraboly/pwc-tabview",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "Simple and self-contained tabview.",
   "keywords": [
     "paraboly",
@@ -27,7 +27,7 @@
   "types": "dist/types/index.d.ts",
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
-  "unpkg": "dist/pwc-tabview/pwc-tabview.js",
+  "unpkg": "dist/project-name/project-name.js",
   "files": [
     "dist/",
     "loader/"
@@ -47,15 +47,16 @@
     "postversion": "git push && git push --tags"
   },
   "devDependencies": {
-    "@stencil/core": "^1.8.2",
+    "@stencil/core": "^1.8.5",
+    "@stencil/router": "^1.0.1",
     "@stencil/sass": "^1.1.1",
-    "@types/jest": "^24.0.24",
+    "@types/jest": "24.0.25",
     "@types/puppeteer": "1.20.3",
-    "jest": "^24.9.0",
-    "jest-cli": "^24.9.0",
+    "jest": "24.9.0",
+    "jest-cli": "24.9.0",
     "prettier": "^1.19.1",
     "puppeteer": "1.20.0",
-    "tslint": "^5.20.1",
+    "tslint": "^6.0.0",
     "tslint-config-prettier": "^1.18.0"
   },
   "dependencies": {},

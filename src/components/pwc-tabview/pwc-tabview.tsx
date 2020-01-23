@@ -70,7 +70,7 @@ export class PwcTabview {
     this.activeHandle = handle;
 
     this.tabChanged.emit({
-      handle: handle,
+      handle,
       tabRef: this.activeTabRef,
       handleRef: this.activeHandleRef
     });
