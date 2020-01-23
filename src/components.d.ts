@@ -9,7 +9,7 @@
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
   PwcTabviewInterfaces,
-} from './interfaces/PwcTabviewInterfaces';
+} from './interfaces/pwc-tabview-interfaces';
 
 export namespace Components {
   interface PwcTabview {

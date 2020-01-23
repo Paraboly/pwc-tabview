@@ -9,7 +9,7 @@ import {
   Method,
   Watch
 } from "@stencil/core";
-import { PwcTabviewInterfaces } from "../../interfaces/PwcTabviewInterfaces";
+import { PwcTabviewInterfaces } from "../../interfaces/pwc-tabview-interfaces";
 
 @Component({
   tag: "pwc-tabview",
