@@ -8,8 +8,11 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  PwcTabviewInterfaces,
-} from './interfaces/pwc-tabview-interfaces';
+  ITabChangedEventPayload,
+} from './components/pwc-tabview/ITabChangedEventPayload';
+import {
+  IHandleClickedEventPayload,
+} from './components/pwc-tabview-handle/IHandleClickedEventPayload';
 
 export namespace Components {
   interface PwcTabview {
@@ -55,12 +58,12 @@ declare global {
 
 declare namespace LocalJSX {
   interface PwcTabview {
-    'onTabChanged'?: (event: CustomEvent<PwcTabviewInterfaces.ITabChangedEventPayload>) => void;
+    'onTabChanged'?: (event: CustomEvent<ITabChangedEventPayload>) => void;
   }
   interface PwcTabviewHandle {
     'active'?: boolean;
     'handle'?: string;
-    'onHandleClicked'?: (event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>) => void;
+    'onHandleClicked'?: (event: CustomEvent<IHandleClickedEventPayload>) => void;
   }
   interface PwcTabviewTab {
     'active'?: boolean;

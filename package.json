@@ -44,7 +44,8 @@
     "prepublishOnly": "npm test && npm run lint",
     "preversion": "npm run lint",
     "version": "npm run format && git add -A src",
-    "postversion": "git push && git push --tags"
+    "postversion": "git push && git push --tags",
+    "finalize": "npm run lint && npm run build && npm run format"
   },
   "devDependencies": {
     "@stencil/core": "^1.8.5",

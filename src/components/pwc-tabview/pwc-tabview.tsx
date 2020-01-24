@@ -9,7 +9,8 @@ import {
   Method,
   Watch
 } from "@stencil/core";
-import { PwcTabviewInterfaces } from "../../interfaces/pwc-tabview-interfaces";
+import { ITabChangedEventPayload } from "./ITabChangedEventPayload";
+import { IHandleClickedEventPayload } from "../pwc-tabview-handle/IHandleClickedEventPayload";
 
 @Component({
   tag: "pwc-tabview",
@@ -33,9 +34,7 @@ export class PwcTabview {
   private tabRefs: { [key: string]: HTMLPwcTabviewTabElement } = {};
   private handleRefs: { [key: string]: HTMLPwcTabviewHandleElement } = {};
 
-  @Event() tabChanged: EventEmitter<
-    PwcTabviewInterfaces.ITabChangedEventPayload
-  >;
+  @Event() tabChanged: EventEmitter<ITabChangedEventPayload>;
 
   @Listen("tabModified")
   tabModifiedEventHandler(event: Event) {
@@ -46,9 +45,7 @@ export class PwcTabview {
   }
 
   @Listen("handleClicked")
-  handleClickedHandler(
-    event: CustomEvent<PwcTabviewInterfaces.IHandleClickedEventPayload>
-  ) {
+  handleClickedHandler(event: CustomEvent<IHandleClickedEventPayload>) {
     event.stopPropagation();
     event.preventDefault();
 

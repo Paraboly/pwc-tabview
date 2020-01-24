@@ -7,7 +7,7 @@ import {
   Watch,
   Listen
 } from "@stencil/core";
-import { PwcTabviewInterfaces } from "../../interfaces/pwc-tabview-interfaces";
+import { IHandleClickedEventPayload } from "./IHandleClickedEventPayload";
 
 @Component({
   tag: "pwc-tabview-handle",
@@ -29,9 +29,7 @@ export class PwcTabviewHandle {
     }
   }
 
-  @Event() handleClicked: EventEmitter<
-    PwcTabviewInterfaces.IHandleClickedEventPayload
-  >;
+  @Event() handleClicked: EventEmitter<IHandleClickedEventPayload>;
 
   @Listen("click")
   clickEventHandler(event: MouseEvent) {
