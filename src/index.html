@@ -23,7 +23,7 @@
   </head>
   <body>
     <pwc-tabview class="spaceAfter">
-      <pwc-tabview-tab handle="What is Lorem Ipsum?">
+      <pwc-tabview-tab title="What is Lorem Ipsum?">
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
         since the 1500s, when an unknown printer took a galley of type and
@@ -34,7 +34,7 @@
         with desktop publishing software like Aldus PageMaker including versions
         of Lorem Ipsum.
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="Where does it come from?">
+      <pwc-tabview-tab title="Where does it come from?">
         Contrary to popular belief, Lorem Ipsum is not simply random text. It
         has roots in a piece of classical Latin literature from 45 BC, making it
         over 2000 years old. Richard McClintock, a Latin professor at
@@ -51,7 +51,7 @@
         "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their
         exact original form, accompan
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="Why do we use it?">
+      <pwc-tabview-tab title="Why do we use it?">
         It is a long established fact that a reader will be distracted by the
         readable content of a page when looking at its layout. The point of
         using Lorem Ipsum is that it has a more-or-less normal distribution of
@@ -62,31 +62,31 @@
         infancy. Various versions have evolved over the years, sometimes by
         accident, sometimes on purpose (injected humour and the like).
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="1 Long tab name long tab name">
+      <pwc-tabview-tab title="1 Long tab name long tab name">
         1
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="2 Long tab name long tab name">
+      <pwc-tabview-tab title="2 Long tab name long tab name">
         2
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="3 Long tab name long tab name">
+      <pwc-tabview-tab title="3 Long tab name long tab name">
         3
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="4 Long tab name long tab name">
+      <pwc-tabview-tab title="4 Long tab name long tab name">
         4
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="5 Long tab name long tab name">
+      <pwc-tabview-tab title="5 Long tab name long tab name">
         5
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="6 Long tab name long tab name">
+      <pwc-tabview-tab title="6 Long tab name long tab name">
         6
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="7 Long tab name long tab name">
+      <pwc-tabview-tab title="7 Long tab name long tab name">
         7
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="8 Long tab name long tab name">
+      <pwc-tabview-tab title="8 Long tab name long tab name">
         8
       </pwc-tabview-tab>
-      <pwc-tabview-tab handle="9 Long tab name long tab name">
+      <pwc-tabview-tab title="9 Long tab name long tab name">
         9
       </pwc-tabview-tab>
     </pwc-tabview>
@@ -99,12 +99,12 @@
     <form id="removeTabForm">
       <div class="spaceAfter">
         <label>
-          Tab Handle:
+          Tab Title:
           <input
             type="text"
-            id="tabHandle"
-            name="handle"
-            placeholder="enter tab handle..."
+            id="tabTitle"
+            name="title"
+            placeholder="enter tab title..."
           />
         </label>
 
@@ -114,16 +114,16 @@
 
       <div>
         <label>
-          New Tab Handle:
+          New Tab Title:
           <input
             type="text"
-            id="newTabHandle"
-            name="newHandle"
-            placeholder="enter new tab handle..."
+            id="newTabTitle"
+            name="newTitle"
+            placeholder="enter new tab title..."
           />
         </label>
 
-        <input type="button" id="changeHandle" value="Change Handle" />
+        <input type="button" id="changeTitle" value="Change Title" />
       </div>
     </form>
 
@@ -136,31 +136,31 @@
           const children = document.querySelector("pwc-tabview").children;
           children[children.length - 1].insertAdjacentHTML(
             "afterend",
-            "<pwc-tabview-tab handle='" +
+            "<pwc-tabview-tab title='" +
               (++newTabCounter).toString() +
               "'>New Tab</pwc-tabview-tab>"
           );
         });
 
         document.querySelector("#removeTab").addEventListener("click", e => {
-          const tabHandle = document.querySelector("#tabHandle").value;
+          const tabTitle = document.querySelector("#tabTitle").value;
           const childTabRemove = tabView.querySelector(
-            "[handle='" + tabHandle + "'"
+            "[title='" + tabTitle + "'"
           );
           tabView.removeChild(childTabRemove);
         });
 
         document.querySelector("#switchToTab").addEventListener("click", e => {
-          const tabHandle = document.querySelector("#tabHandle").value;
-          tabView.switchToTab(tabHandle);
+          const tabTitle = document.querySelector("#tabTitle").value;
+          tabView.switchToTab(tabTitle);
         });
 
-        document.querySelector("#changeHandle").addEventListener("click", e => {
-          const tabHandle = document.querySelector("#tabHandle").value;
-          const newTabHandle = document.querySelector("#newTabHandle").value;
+        document.querySelector("#changeTitle").addEventListener("click", e => {
+          const tabTitle = document.querySelector("#tabTitle").value;
+          const newTabTitle = document.querySelector("#newTabTitle").value;
           tabView
-            .querySelector("[handle='" + tabHandle + "'")
-            .setAttribute("handle", newTabHandle);
+            .querySelector("[title='" + tabTitle + "'")
+            .setAttribute("title", newTabTitle);
         });
 
         tabView.addEventListener("tabChanged", e => {

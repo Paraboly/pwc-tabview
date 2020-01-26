@@ -23,8 +23,14 @@
 - Put two script tags similar to this in the head of your index.html:
 
 ```html
-<script type="module" src="https://unpkg.com/@paraboly/pwc-tabview@latest/dist/pwc-tabview/pwc-tabview.esm.js"></script>
-<script nomodule src="https://unpkg.com/@paraboly/pwc-tabview@latest/dist/pwc-tabview/pwc-tabview.js"></script>
+<script
+  type="module"
+  src="https://unpkg.com/@paraboly/pwc-tabview@latest/dist/pwc-tabview/pwc-tabview.esm.js"
+></script>
+<script
+  nomodule
+  src="https://unpkg.com/@paraboly/pwc-tabview@latest/dist/pwc-tabview/pwc-tabview.js"
+></script>
 ```
 
 - Then you can use the element anywhere in your template, JSX, html etc
@@ -45,15 +51,13 @@
 
 ```html
 <pwc-tabview>
-
-  <pwc-tabview-tab handle="handle text">
+  <pwc-tabview-tab title="title text">
     Tab content
   </pwc-tabview-tab>
 
-  <pwc-tabview-tab handle="handle text">
+  <pwc-tabview-tab title="title text">
     Tab content
   </pwc-tabview-tab>
-  
 </pwc-tabview>
 ```
 

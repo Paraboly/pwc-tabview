@@ -11,13 +11,13 @@ import { IHandleClickedEventPayload } from "./IHandleClickedEventPayload";
 
 @Component({
   tag: "pwc-tabview-handle",
-  styleUrl: "../styles.scss",
+  styleUrl: "pwc-tabview-handle.scss",
   shadow: false
 })
 export class PwcTabviewHandle {
   @Element() root: HTMLPwcTabviewHandleElement;
 
-  @Prop() handle: string;
+  @Prop() title: string;
 
   @Prop({ reflect: true }) active: boolean;
   @Watch("active")
@@ -33,12 +33,10 @@ export class PwcTabviewHandle {
 
   @Listen("click")
   clickEventHandler(event: MouseEvent) {
-    event.preventDefault();
-    event.stopPropagation();
     this.handleClicked.emit({
       originalEvent: event,
-      handleRef: this.root,
-      handle: this.handle
+      handle: this.root,
+      title: this.title
     });
   }
 
@@ -47,6 +45,6 @@ export class PwcTabviewHandle {
   }
 
   render() {
-    return this.handle;
+    return this.title;
   }
 }

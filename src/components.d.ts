@@ -8,24 +8,31 @@
 
 import { HTMLStencilElement, JSXBase } from '@stencil/core/internal';
 import {
-  ITabChangedEventPayload,
-} from './components/pwc-tabview/ITabChangedEventPayload';
+  IState,
+} from './components/pwc-tabview/IState';
 import {
   IHandleClickedEventPayload,
 } from './components/pwc-tabview-handle/IHandleClickedEventPayload';
 
 export namespace Components {
   interface PwcTabview {
-    'getActiveState': () => Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HTMLPwcTabviewHandleElement; }>;
-    'switchToTab': (handle: string) => Promise<void>;
+    /**
+    * Returns the currently active tab, handle, and title.
+    */
+    'getActiveState': () => Promise<IState>;
+    /**
+    * Switches to a tab.
+    * @param title Title of the target tab.
+    */
+    'switchToTab': (title: string) => Promise<void>;
   }
   interface PwcTabviewHandle {
     'active': boolean;
-    'handle': string;
+    'title': string;
   }
   interface PwcTabviewTab {
     'active': boolean;
-    'handle': string;
+    'title': string;
   }
 }
 
@@ -58,17 +65,20 @@ declare global {
 
 declare namespace LocalJSX {
   interface PwcTabview {
-    'onTabChanged'?: (event: CustomEvent<ITabChangedEventPayload>) => void;
+    /**
+    * This is emitted when we switch to another tab.
+    */
+    'onTabChanged'?: (event: CustomEvent<IState>) => void;
   }
   interface PwcTabviewHandle {
     'active'?: boolean;
-    'handle'?: string;
     'onHandleClicked'?: (event: CustomEvent<IHandleClickedEventPayload>) => void;
+    'title'?: string;
   }
   interface PwcTabviewTab {
     'active'?: boolean;
-    'handle'?: string;
     'onTabModified'?: (event: CustomEvent<any>) => void;
+    'title'?: string;
   }
 
   interface IntrinsicElements {

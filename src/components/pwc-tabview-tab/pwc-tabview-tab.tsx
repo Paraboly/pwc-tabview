@@ -10,21 +10,21 @@ import {
 
 @Component({
   tag: "pwc-tabview-tab",
-  styleUrl: "../styles.scss",
+  styleUrl: "pwc-tabview-tab.scss",
   shadow: false
 })
 export class PwcTabviewTab {
-  @Element() root: HTMLElement;
+  @Element() root: HTMLPwcTabviewTabElement;
 
   @Event() tabModified: EventEmitter;
 
-  @Prop({ reflect: true }) handle: string;
-  @Watch("handle")
-  watchHandler() {
+  @Prop({ reflect: true }) title: string;
+  @Watch("title")
+  titleWatchHandler() {
     this.tabModified.emit();
   }
 
-  @Prop() active: boolean;
+  @Prop({ reflect: true }) active: boolean;
   @Watch("active")
   activeWatchHandler(newValue: boolean) {
     if (newValue) {
