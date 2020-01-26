@@ -5,26 +5,26 @@
 
 ## Events
 
-| Event        | Description | Type                                   |
-| ------------ | ----------- | -------------------------------------- |
-| `tabChanged` |             | `CustomEvent<ITabChangedEventPayload>` |
+| Event        | Description                                    | Type                  |
+| ------------ | ---------------------------------------------- | --------------------- |
+| `tabChanged` | This is emitted when we switch to another tab. | `CustomEvent<IState>` |
 
 
 ## Methods
 
-### `getActiveState() => Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HTMLPwcTabviewHandleElement; }>`
+### `getActiveState() => Promise<IState>`
 
-
+Returns the currently active tab, handle, and title.
 
 #### Returns
 
-Type: `Promise<{ handle: string; tabRef: HTMLPwcTabviewTabElement; handleRef: HTMLPwcTabviewHandleElement; }>`
+Type: `Promise<IState>`
 
 
 
-### `switchToTab(handle: string) => Promise<void>`
+### `switchToTab(title: string) => Promise<void>`
 
-
+Switches to a tab.
 
 #### Returns
 
