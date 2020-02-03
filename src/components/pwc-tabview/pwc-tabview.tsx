@@ -68,6 +68,10 @@ export class PwcTabview {
    */
   @Method()
   async switchToTab(title: string) {
+    if (!this.titles.includes(title)) {
+      throw new Error("Tab title not found.");
+    }
+
     this.activeTitle = title;
 
     this.tabChanged.emit({
@@ -83,6 +87,10 @@ export class PwcTabview {
    */
   @Method()
   async switchToTabIndex(index: number) {
+    if (this.titles.length <= index) {
+      throw new Error("Tab index not found.");
+    }
+
     const title = this.titles[index];
     return this.switchToTab(title);
   }
