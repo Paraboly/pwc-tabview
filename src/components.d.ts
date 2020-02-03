@@ -25,6 +25,11 @@ export namespace Components {
     * @param title Title of the target tab.
     */
     'switchToTab': (title: string) => Promise<void>;
+    /**
+    * Switches to a tab.
+    * @param index Index of the target tab.
+    */
+    'switchToTabIndex': (index: number) => Promise<void>;
   }
   interface PwcTabviewHandle {
     'active': boolean;

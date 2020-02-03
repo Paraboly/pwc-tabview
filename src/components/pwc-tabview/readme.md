@@ -32,6 +32,16 @@ Type: `Promise<void>`
 
 
 
+### `switchToTabIndex(index: number) => Promise<void>`
+
+Switches to a tab.
+
+#### Returns
+
+Type: `Promise<void>`
+
+
+
 
 ## Dependencies
 

@@ -77,27 +77,45 @@ export class PwcTabview {
     });
   }
 
+  /**
+   * Switches to a tab.
+   * @param index Index of the target tab.
+   */
+  @Method()
+  async switchToTabIndex(index: number) {
+    const title = this.titles[index];
+    return this.switchToTab(title);
+  }
+
   // The value has no significance. We increment it to trigger a render.
   @State() forceRenderSentinel: number;
   forceRender() {
     this.forceRenderSentinel = (this.forceRenderSentinel + 1) % 100;
   }
 
+  onChildrenChange() {
+    this.parseTabList();
+    this.switchToTabIndex(0);
+  }
+
+  parseTabList(): HTMLPwcTabviewTabElement[] {
+    const tabs = Array.from(document.querySelectorAll("pwc-tabview-tab"));
+    this.titles = tabs.map(t => t.title);
+    return tabs;
+  }
+
   componentDidLoad() {
-    const observer = new MutationObserver(() => this.forceRender());
+    const observer = new MutationObserver(this.onChildrenChange.bind(this));
     const options = {
       childList: true
     };
     observer.observe(this.root, options);
 
-    const firstHandle = this.titles[0];
-    this.switchToTab(firstHandle);
+    this.switchToTabIndex(0);
   }
 
   render() {
-    const tabs = Array.from(document.querySelectorAll("pwc-tabview-tab"));
-
-    this.titles = tabs.map(t => t.title);
+    const tabs = this.parseTabList();
 
     if (tabs.length > 0 && this.activeTab) {
       tabs.forEach(t => (t.active = false));
