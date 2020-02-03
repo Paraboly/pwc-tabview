@@ -104,6 +104,7 @@ export class PwcTabview {
   onChildrenChange() {
     this.parseTabList();
     this.switchToTabIndex(0);
+    this.forceRender();
   }
 
   parseTabList(): HTMLPwcTabviewTabElement[] {
