@@ -41,7 +41,7 @@ export class PwcTabview {
 
   @Listen("tabModified")
   tabModifiedEventHandler() {
-    this.forceRender();
+    this.root.forceUpdate();
   }
 
   @Listen("handleClicked")
@@ -95,16 +95,9 @@ export class PwcTabview {
     return this.switchToTab(title);
   }
 
-  // The value has no significance. We increment it to trigger a render.
-  @State() forceRenderSentinel: number;
-  forceRender() {
-    this.forceRenderSentinel = (this.forceRenderSentinel + 1) % 100;
-  }
-
   onChildrenChange() {
     this.parseTabList();
-    this.switchToTabIndex(0);
-    this.forceRender();
+    this.root.forceUpdate();
   }
 
   parseTabList(): HTMLPwcTabviewTabElement[] {
@@ -120,7 +113,9 @@ export class PwcTabview {
     };
     observer.observe(this.root, options);
 
-    this.switchToTabIndex(0);
+    if (this.titles.length > 0) {
+      this.switchToTabIndex(0);
+    }
   }
 
   render() {
@@ -139,8 +134,9 @@ export class PwcTabview {
 
           return (
             <pwc-tabview-handle
+              key={title}
               title={title}
-              active={this.activeTab === tab}
+              active={this.activeTitle === title}
               ref={elem => (this.handles[tab.title] = elem)}
             ></pwc-tabview-handle>
           );
@@ -148,5 +144,11 @@ export class PwcTabview {
       </div>,
       <slot />
     ];
+  }
+
+  componentDidRender() {
+    if (!this.titles.includes(this.activeTitle) && this.titles.length > 0) {
+      this.switchToTabIndex(0);
+    }
   }
 }
