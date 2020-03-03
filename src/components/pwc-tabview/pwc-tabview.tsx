@@ -33,6 +33,9 @@ export class PwcTabview {
   activeTitleWatchHandler(newValue: string) {
     this.activeTab = this.titleToTabMap[newValue];
     this.activeHandle = this.titleToHandleMap[newValue];
+
+    // NOTE: We don't have to do safeguarding here, because the activeTitle
+    // can only change through switchToTab method, which is already safeguarded.
   }
 
   /**
