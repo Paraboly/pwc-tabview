@@ -106,13 +106,11 @@
       document.addEventListener("DOMContentLoaded", e => {
         let newTabCounter = 0;
         document.querySelector("#addTabButton").addEventListener("click", e => {
-          const children = document.querySelector("pwc-tabview").children;
-          children[children.length - 1].insertAdjacentHTML(
-            "afterend",
-            "<pwc-tabview-tab title='" +
-              (++newTabCounter).toString() +
-              "'>New Tab</pwc-tabview-tab>"
-          );
+          const newNode = document.createElement("pwc-tabview-tab");
+          newNode.setAttribute("title", (++newTabCounter).toString());
+          newNode.innerHTML = "New Tab";
+
+          document.querySelector("pwc-tabview").appendChild(newNode);
         });
 
         document.querySelector("#removeTab").addEventListener("click", e => {

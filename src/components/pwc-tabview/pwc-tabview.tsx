@@ -18,20 +18,21 @@ import { IState } from "./IState";
   shadow: false
 })
 export class PwcTabview {
+  @Element() root: HTMLPwcTabviewElement;
+
+  private tabRefs: HTMLPwcTabviewTabElement[] = [];
+  private titleToTabMap: { [key: string]: HTMLPwcTabviewTabElement } = {};
+  private titleToHandleMap: { [key: string]: HTMLPwcTabviewHandleElement } = {};
+  private titles: string[] = [];
+
   private activeTab: HTMLPwcTabviewTabElement;
   private activeHandle: HTMLPwcTabviewHandleElement;
-
-  private titles: string[] = [];
-  private tabs: { [key: string]: HTMLPwcTabviewTabElement } = {};
-  private handles: { [key: string]: HTMLPwcTabviewHandleElement } = {};
-
-  @Element() root: HTMLPwcTabviewElement;
 
   @State() activeTitle: string;
   @Watch("activeTitle")
   activeTitleWatchHandler(newValue: string) {
-    this.activeTab = this.tabs[newValue];
-    this.activeHandle = this.handles[newValue];
+    this.activeTab = this.titleToTabMap[newValue];
+    this.activeHandle = this.titleToHandleMap[newValue];
   }
 
   /**
@@ -87,7 +88,7 @@ export class PwcTabview {
    */
   @Method()
   async switchToTabIndex(index: number) {
-    if (this.titles.length <= index) {
+    if (this.titles.length <= index || index < 0) {
       throw new Error("Tab index not found.");
     }
 
@@ -96,14 +97,15 @@ export class PwcTabview {
   }
 
   onChildrenChange() {
-    this.parseTabList();
     this.root.forceUpdate();
   }
 
-  parseTabList(): HTMLPwcTabviewTabElement[] {
-    const tabs = Array.from(document.querySelectorAll("pwc-tabview-tab"));
-    this.titles = tabs.map(t => t.title);
-    return tabs;
+  parseTabList() {
+    this.tabRefs = Array.from(this.root.querySelectorAll("pwc-tabview-tab"));
+    this.titles = this.tabRefs.map(t => t.title);
+    this.tabRefs.forEach(t => {
+      this.titleToTabMap[t.title] = t;
+    });
   }
 
   componentDidLoad() {
@@ -112,32 +114,27 @@ export class PwcTabview {
       childList: true
     };
     observer.observe(this.root, options);
+  }
 
-    if (this.titles.length > 0) {
-      this.switchToTabIndex(0);
+  componentWillRender() {
+    this.parseTabList();
+
+    this.tabRefs.forEach(t => (t.active = false));
+    if (this.activeTab) {
+      this.activeTab.active = true;
     }
   }
 
   render() {
-    const tabs = this.parseTabList();
-
-    if (tabs.length > 0 && this.activeTab) {
-      tabs.forEach(t => (t.active = false));
-      this.activeTab.active = true;
-    }
-
     return [
       <div class="pwc-tabview___handle-container">
-        {tabs.map(tab => {
-          const title = tab.title;
-          this.tabs[title] = tab;
-
+        {this.tabRefs.map(tab => {
           return (
             <pwc-tabview-handle
-              key={title}
-              title={title}
-              active={this.activeTitle === title}
-              ref={elem => (this.handles[tab.title] = elem)}
+              key={tab.title}
+              title={tab.title}
+              active={this.activeTitle === tab.title}
+              ref={elem => (this.titleToHandleMap[tab.title] = elem)}
             ></pwc-tabview-handle>
           );
         })}
