@@ -5,6 +5,6 @@ pwc-tabview-tab {
   background-color: white;
 }
 
-.pwc-tabview___active-tab {
+pwc-tabview-tab[active] {
   display: block;
 }

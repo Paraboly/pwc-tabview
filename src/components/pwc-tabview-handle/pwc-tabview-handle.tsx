@@ -22,11 +22,6 @@ export class PwcTabviewHandle {
   @Prop({ reflect: true }) active: boolean;
   @Watch("active")
   activeWatchHandler(newValue: boolean) {
-    if (newValue) {
-      this.root.classList.add("pwc-tabview___active-handle");
-    } else {
-      this.root.classList.remove("pwc-tabview___active-handle");
-    }
   }
 
   @Event() handleClicked: EventEmitter<IHandleClickedEventPayload>;

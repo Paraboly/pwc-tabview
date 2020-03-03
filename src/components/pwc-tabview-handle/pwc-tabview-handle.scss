@@ -7,6 +7,6 @@ pwc-tabview-handle {
   background-color: #ddd;
 }
 
-.pwc-tabview___active-handle {
+pwc-tabview-handle[active] {
   background-color: #fff;
 }
