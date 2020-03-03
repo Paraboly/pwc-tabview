@@ -5,10 +5,10 @@
 
 ## Properties
 
-| Property | Attribute | Description | Type      | Default     |
-| -------- | --------- | ----------- | --------- | ----------- |
-| `active` | `active`  |             | `boolean` | `undefined` |
-| `title`  | `title`   |             | `string`  | `undefined` |
+| Property | Attribute | Description | Type      | Default              |
+| -------- | --------- | ----------- | --------- | -------------------- |
+| `active` | `active`  |             | `boolean` | `this.defaultActive` |
+| `title`  | `title`   |             | `string`  | `undefined`          |
 
 
 ## Events
