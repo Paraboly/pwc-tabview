@@ -19,9 +19,13 @@ export class PwcTabviewHandle {
 
   @Prop() title: string;
 
-  @Prop({ reflect: true }) active: boolean;
+  private readonly defaultActive = false;
+  @Prop({ reflect: true }) active: boolean = this.defaultActive;
   @Watch("active")
   activeWatchHandler(newValue: boolean) {
+    if (newValue === null || newValue === undefined) {
+      this.active = this.defaultActive;
+    }
   }
 
   @Event() handleClicked: EventEmitter<IHandleClickedEventPayload>;

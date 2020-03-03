@@ -24,9 +24,13 @@ export class PwcTabviewTab {
     this.tabModified.emit();
   }
 
-  @Prop({ reflect: true }) active: boolean;
+  private readonly defaultActive = false;
+  @Prop({ reflect: true }) active: boolean = this.defaultActive;
   @Watch("active")
   activeWatchHandler(newValue: boolean) {
+    if (newValue === null || newValue === undefined) {
+      this.active = this.defaultActive;
+    }
   }
 
   componentWillRender() {
