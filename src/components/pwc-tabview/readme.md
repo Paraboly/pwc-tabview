@@ -3,6 +3,13 @@
 <!-- Auto Generated Below -->
 
 
+## Properties
+
+| Property      | Attribute      | Description | Type     | Default     |
+| ------------- | -------------- | ----------- | -------- | ----------- |
+| `activeTitle` | `active-title` |             | `string` | `undefined` |
+
+
 ## Events
 
 | Event        | Description                                    | Type                  |

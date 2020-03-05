@@ -3,11 +3,11 @@ import {
   h,
   Element,
   Listen,
-  State,
   Event,
   EventEmitter,
   Method,
-  Watch
+  Watch,
+  Prop
 } from "@stencil/core";
 import { IHandleClickedEventPayload } from "../pwc-tabview-handle/IHandleClickedEventPayload";
 import { IState } from "./IState";
@@ -25,17 +25,32 @@ export class PwcTabview {
   private titleToHandleMap: { [key: string]: HTMLPwcTabviewHandleElement } = {};
   private titles: string[] = [];
 
-  private activeTab: HTMLPwcTabviewTabElement;
-  private activeHandle: HTMLPwcTabviewHandleElement;
-
-  @State() activeTitle: string;
+  @Prop({ reflect: true, mutable: true }) activeTitle: string;
   @Watch("activeTitle")
-  activeTitleWatchHandler(newValue: string) {
-    this.activeTab = this.titleToTabMap[newValue];
-    this.activeHandle = this.titleToHandleMap[newValue];
+  activeTitleWatchHandler(newValue, oldValue) {
+    this.parseTabList();
 
-    // NOTE: We don't have to do safeguarding here, because the activeTitle
-    // can only change through switchToTab method, which is already safeguarded.
+    if (!this.titles.includes(newValue)) {
+      // tslint:disable-next-line: no-console
+      console.error(
+        `Active title not found! Refusing to update. Requested activeTitle: '${newValue}' Old activeTitle: '${oldValue}' All titles: '${this.titles}'`
+      );
+
+      if (!this.titles.includes(oldValue)) {
+        // tslint:disable-next-line: no-console
+        console.error(
+          `Old title is not there anymore. Refusing to revert. Requested activeTitle: '${newValue}' Old activeTitle: '${oldValue}' All titles: '${this.titles}'`
+        );
+      } else {
+        this.activeTitle = oldValue;
+      }
+    } else {
+      this.tabChanged.emit({
+        title: newValue,
+        tab: this.titleToTabMap[newValue],
+        handle: this.titleToHandleMap[newValue]
+      });
+    }
   }
 
   /**
@@ -45,6 +60,7 @@ export class PwcTabview {
 
   @Listen("tabModified")
   tabModifiedEventHandler() {
+    this.parseTabList();
     this.root.forceUpdate();
   }
 
@@ -61,8 +77,8 @@ export class PwcTabview {
   async getActiveState(): Promise<IState> {
     return {
       title: this.activeTitle,
-      tab: this.activeTab,
-      handle: this.activeHandle
+      tab: this.titleToTabMap[this.activeTitle],
+      handle: this.titleToHandleMap[this.activeTitle]
     };
   }
 
@@ -72,17 +88,7 @@ export class PwcTabview {
    */
   @Method()
   async switchToTab(title: string) {
-    if (!this.titles.includes(title)) {
-      throw new Error("Tab title not found.");
-    }
-
     this.activeTitle = title;
-
-    this.tabChanged.emit({
-      title,
-      tab: this.activeTab,
-      handle: this.activeHandle
-    });
   }
 
   /**
@@ -91,21 +97,20 @@ export class PwcTabview {
    */
   @Method()
   async switchToTabIndex(index: number) {
-    if (this.titles.length <= index || index < 0) {
-      throw new Error("Tab index not found.");
-    }
-
     const title = this.titles[index];
     return this.switchToTab(title);
   }
 
   onChildrenChange() {
+    this.parseTabList();
     this.root.forceUpdate();
   }
 
   parseTabList() {
     this.tabRefs = Array.from(this.root.querySelectorAll("pwc-tabview-tab"));
     this.titles = this.tabRefs.map(t => t.title);
+
+    this.titleToTabMap = {};
     this.tabRefs.forEach(t => {
       this.titleToTabMap[t.title] = t;
     });
@@ -119,13 +124,25 @@ export class PwcTabview {
     observer.observe(this.root, options);
   }
 
-  componentWillRender() {
+  async componentWillRender() {
+    // refresh internal bookkeeping
     this.parseTabList();
 
-    this.tabRefs.forEach(t => (t.active = false));
-    if (this.activeTab) {
-      this.activeTab.active = true;
+    // if the active title doesn't exist, switch to the first tab (if it exists)
+    if (!this.titles.includes(this.activeTitle) && this.titles.length > 0) {
+      await this.switchToTabIndex(0);
     }
+
+    // set all tabs inactive
+    this.tabRefs.forEach(t => (t.active = false));
+
+    // set the active tab active
+    if (this.titleToTabMap.hasOwnProperty(this.activeTitle)) {
+      this.titleToTabMap[this.activeTitle].active = true;
+    }
+
+    // flush the handle map
+    this.titleToHandleMap = {};
   }
 
   render() {
@@ -144,11 +161,5 @@ export class PwcTabview {
       </div>,
       <slot />
     ];
-  }
-
-  componentDidRender() {
-    if (!this.titles.includes(this.activeTitle) && this.titles.length > 0) {
-      this.switchToTabIndex(0);
-    }
   }
 }

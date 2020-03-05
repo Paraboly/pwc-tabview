@@ -16,6 +16,7 @@ import {
 
 export namespace Components {
   interface PwcTabview {
+    'activeTitle': string;
     /**
     * Returns the currently active tab, handle, and title.
     */
@@ -70,6 +71,7 @@ declare global {
 
 declare namespace LocalJSX {
   interface PwcTabview {
+    'activeTitle'?: string;
     /**
     * This is emitted when we switch to another tab.
     */
